@@ -5,6 +5,8 @@ import { DifficultyBadge } from "@/components/ui/DifficultyBadge";
 import { Badge } from "@/components/ui/Badge";
 import { Calendar, Clock, Flag, ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { TableOfContents } from "@/components/TableOfContents";
+import { extractHeadings } from "@/lib/toc";
 
 export async function generateStaticParams() {
     const slugs = getWriteupSlugs();
@@ -34,53 +36,63 @@ export default function WriteupPage({ params }: { params: { slug: string } }) {
     }
 
     const { metadata, content } = writeup;
+    const toc = extractHeadings(content);
 
     return (
-        <article className="container mx-auto max-w-4xl px-4 py-12 md:px-6">
+        <div className="container mx-auto max-w-6xl px-4 py-12 md:px-6">
             <Link href="/writeups" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-emerald-400 transition-colors mb-8">
                 <ChevronLeft className="w-4 h-4" />
                 Back to write-ups
             </Link>
 
-            <div className="mb-12 border-b border-zinc-800/80 pb-8">
-                <div className="flex items-center gap-3 mb-6">
-                    <Badge variant="secondary">{metadata.category}</Badge>
-                    <DifficultyBadge difficulty={metadata.difficulty} />
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-12 items-start">
+                <article>
+                    <div className="mb-12 border-b border-zinc-800/80 pb-8">
+                        <div className="flex items-center gap-3 mb-6">
+                            <Badge variant="secondary">{metadata.category}</Badge>
+                            <DifficultyBadge difficulty={metadata.difficulty} />
+                        </div>
 
-                <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl text-zinc-50 mb-6">
-                    {metadata.title}
-                </h1>
+                        <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl text-zinc-50 mb-6">
+                            {metadata.title}
+                        </h1>
 
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-zinc-400 font-mono">
-                    <span className="flex items-center gap-2">
-                        <Flag className="w-4 h-4 text-emerald-500" />
-                        {metadata.event}
-                    </span>
-                    <span className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
-                        {metadata.date}
-                    </span>
-                    <span className="flex items-center gap-2">
-                        <Clock className="w-4 h-4" />
-                        {metadata.readingTime} min read
-                    </span>
-                </div>
+                        <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-zinc-400 font-mono">
+                            <span className="flex items-center gap-2">
+                                <Flag className="w-4 h-4 text-emerald-500" />
+                                {metadata.event}
+                            </span>
+                            <span className="flex items-center gap-2">
+                                <Calendar className="w-4 h-4" />
+                                {metadata.date}
+                            </span>
+                            <span className="flex items-center gap-2">
+                                <Clock className="w-4 h-4" />
+                                {metadata.readingTime} min read
+                            </span>
+                        </div>
 
-                {metadata.tags && metadata.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-6">
-                        {metadata.tags.map(tag => (
-                            <Badge key={tag} variant="outline" className="px-2 text-zinc-500 border-zinc-800">
-                                {tag}
-                            </Badge>
-                        ))}
+                        {metadata.tags && metadata.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mt-6">
+                                {metadata.tags.map(tag => (
+                                    <Badge key={tag} variant="outline" className="px-2 text-zinc-500 border-zinc-800">
+                                        {tag}
+                                    </Badge>
+                                ))}
+                            </div>
+                        )}
                     </div>
-                )}
-            </div>
 
-            <div className="prose prose-zinc prose-invert max-w-none">
-                <MdxContent source={content} />
+                    <div className="prose prose-zinc prose-invert max-w-none">
+                        <MdxContent source={content} />
+                    </div>
+                </article>
+
+                {/* Sidebar / Right Column */}
+                <aside className="hidden lg:block sticky top-24">
+                    <TableOfContents toc={toc} />
+                </aside>
             </div>
-        </article>
+        </div>
     );
 }

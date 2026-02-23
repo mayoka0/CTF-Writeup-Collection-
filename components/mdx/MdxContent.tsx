@@ -5,8 +5,16 @@ import { cn } from "@/lib/utils";
 const components = {
     pre: CodeBlock,
     h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-zinc-100 lg:text-4xl" {...props} />,
-    h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h2 className="mt-10 mb-4 pb-2 text-2xl font-semibold tracking-tight text-zinc-100 border-b border-zinc-800/50" {...props} />,
-    h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h3 className="mt-8 mb-4 text-xl font-semibold tracking-tight text-zinc-100" {...props} />,
+    h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
+        const text = props.children?.toString() || "";
+        const id = require("github-slugger").slug(text);
+        return <h2 id={id} className="mt-10 mb-4 pb-2 text-2xl font-semibold tracking-tight text-zinc-100 border-b border-zinc-800/50 scroll-m-20" {...props} />
+    },
+    h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
+        const text = props.children?.toString() || "";
+        const id = require("github-slugger").slug(text);
+        return <h3 id={id} className="mt-8 mb-4 text-xl font-semibold tracking-tight text-zinc-100 scroll-m-20" {...props} />
+    },
     p: (props: React.HTMLAttributes<HTMLParagraphElement>) => <p className="leading-7 [&:not(:first-child)]:mt-6 text-zinc-300" {...props} />,
     ul: (props: React.HTMLAttributes<HTMLUListElement>) => <ul className="my-6 ml-6 list-disc [&>li]:mt-2 text-zinc-300" {...props} />,
     ol: (props: React.HTMLAttributes<HTMLOListElement>) => <ol className="my-6 ml-6 list-decimal [&>li]:mt-2 text-zinc-300" {...props} />,
