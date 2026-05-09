@@ -1,18 +1,20 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { CodeBlock } from "./CodeBlock";
 import { cn } from "@/lib/utils";
+import { slug } from "github-slugger";
+import rehypePrettyCode from "rehype-pretty-code";
 
 const components = {
     pre: CodeBlock,
     h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-zinc-100 lg:text-4xl" {...props} />,
     h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
         const text = props.children?.toString() || "";
-        const id = require("github-slugger").slug(text);
+        const id = slug(text);
         return <h2 id={id} className="mt-10 mb-4 pb-2 text-2xl font-semibold tracking-tight text-zinc-100 border-b border-zinc-800/50 scroll-m-20" {...props} />
     },
     h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
         const text = props.children?.toString() || "";
-        const id = require("github-slugger").slug(text);
+        const id = slug(text);
         return <h3 id={id} className="mt-8 mb-4 text-xl font-semibold tracking-tight text-zinc-100 scroll-m-20" {...props} />
     },
     p: (props: React.HTMLAttributes<HTMLParagraphElement>) => <p className="leading-7 [&:not(:first-child)]:mt-6 text-zinc-300" {...props} />,
@@ -34,7 +36,22 @@ const components = {
 export function MdxContent({ source }: { source: string }) {
     return (
         <article className="space-y-6 text-zinc-300">
-            <MDXRemote source={source} components={components} />
+            <MDXRemote
+                source={source}
+                components={components}
+                options={{
+                    mdxOptions: {
+                        rehypePlugins: [
+                            [
+                                rehypePrettyCode,
+                                {
+                                    theme: "one-dark-pro",
+                                },
+                            ],
+                        ],
+                    },
+                }}
+            />
         </article>
     );
 }
