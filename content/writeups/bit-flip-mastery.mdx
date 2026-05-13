@@ -1,0 +1,37 @@
+---
+title: "Bit-Flip Mastery"
+date: "2024-05-13"
+machine: "AES-Walker"
+difficulty: "Medium"
+category: "Cryptography"
+tags: ["AES-CBC", "Bit-Flipping", "Padding"]
+summary: "Exploiting the CBC mode of AES through a classic bit-flipping attack."
+---
+
+# Bit-Flip Mastery
+
+## Initial Reconnaissance
+
+<CyberInfo type="exploit" title="Key Exploit">
+  AES-CBC bit-flipping attack on the session cookie to change the 'role=user' to 'role=admin'.
+</CyberInfo>
+
+## Enumeration
+
+- **Encrypted Cookie:** Noticed the cookie was 32 bytes long, indicating two blocks of AES.
+- **IV Discovery:** The first 16 bytes of the cookie were identified as the Initialization Vector.
+
+## Exploitation
+
+### Step 1: Target Identification
+Identifying exactly which bit in the IV corresponds to the 'u' in 'user' within the first block of plaintext.
+
+### Step 2: The Flip
+Crafting a new IV by XORing the original IV bit with the XOR sum of the current plaintext ('u') and the target ('a').
+
+<CyberInfo type="lesson" title="Lesson Learned">
+  CBC mode without an HMAC or integrity check is vulnerable to structural manipulation of the plaintext.
+</CyberInfo>
+
+## Conclusion
+The AES-Walker machine provided a great challenge in practical cryptographic attacks.

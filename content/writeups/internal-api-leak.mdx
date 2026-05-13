@@ -1,0 +1,37 @@
+---
+title: "Internal API Leak"
+date: "2024-05-13"
+machine: "API-Siphon"
+difficulty: "Hard"
+category: "Web Exploitation"
+tags: ["Broken Auth", "API", "JWT"]
+summary: "An in-depth look at exploiting broken authentication in a private API gateway."
+---
+
+# Internal API Leak
+
+## Initial Reconnaissance
+
+<CyberInfo type="exploit" title="Key Exploit">
+  The primary vulnerability was a leaked JWT signing key found in an improperly secured .env file on a secondary development subdomain.
+</CyberInfo>
+
+## Enumeration
+
+- **Nmap Scan:** Open ports on 80, 443, and 8080 (API Gateway).
+- **Web Discovery:** Discovery of /v1/admin endpoint returning 401 Unauthorized.
+
+## Exploitation
+
+### Step 1: Initial Access
+Forging a JWT using the leaked secret allowed us to impersonate the 'admin' user and gain access to the restricted API endpoints.
+
+### Step 2: Privilege Escalation
+Using the admin API to dump the user database revealed cleartext credentials for the system administrator.
+
+<CyberInfo type="lesson" title="Lesson Learned">
+  Never store signing secrets in accessible environment files or commit them to source control.
+</CyberInfo>
+
+## Conclusion
+The API-Siphon machine provided a great challenge in understanding the critical importance of JWT security and environment management.

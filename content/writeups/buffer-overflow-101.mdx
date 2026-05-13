@@ -1,0 +1,37 @@
+---
+title: "Buffer Overflow 101"
+date: "2024-05-13"
+machine: "Classic-Pwn"
+difficulty: "Easy"
+category: "Binary Exploitation"
+tags: ["BoF", "Ret2Win", "Stack"]
+summary: "A fundamental stack-based buffer overflow to redirect execution to a win function."
+---
+
+# Buffer Overflow 101
+
+## Initial Reconnaissance
+
+<CyberInfo type="exploit" title="Key Exploit">
+  Classic stack-based buffer overflow via an unsafe 'gets()' function call.
+</CyberInfo>
+
+## Enumeration
+
+- **Binary Protections:** No Canary, No PIE, NX Disabled.
+- **Function Discovery:** Found a function named 'winner' at address 0x08048456.
+
+## Exploitation
+
+### Step 1: Offset Discovery
+Using a cyclic pattern to determine the distance (64 bytes) from the start of our input to the Return Address.
+
+### Step 2: The Payload
+Crafting a payload: 64 bytes of padding + the address of the 'winner' function.
+
+<CyberInfo type="lesson" title="Lesson Learned">
+  Always use safe input functions like 'fgets()' that enforce buffer boundaries.
+</CyberInfo>
+
+## Conclusion
+The Classic-Pwn machine provided a great challenge in understanding stack frames and execution flow.

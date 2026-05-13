@@ -30,7 +30,7 @@ export default function RootLayout({
                 <a href="/writeups" className="transition-colors hover:text-emerald-400 text-zinc-300">
                   Writeups
                 </a>
-                <a href="https://github.com/johnmayoka" target="_blank" rel="noreferrer" className="transition-colors hover:text-zinc-100 text-zinc-400">
+                <a href="https://github.com/mayoka0" target="_blank" rel="noreferrer" className="transition-colors hover:text-zinc-100 text-zinc-400">
                   GitHub
                 </a>
               </nav>
