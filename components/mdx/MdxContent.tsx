@@ -1,11 +1,13 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { CodeBlock } from "./CodeBlock";
+import { CyberInfo } from "./CyberInfo";
 import { cn } from "@/lib/utils";
 import { slug } from "github-slugger";
 import rehypePrettyCode from "rehype-pretty-code";
 
 const components = {
     pre: CodeBlock,
+    CyberInfo,
     h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-zinc-100 lg:text-4xl" {...props} />,
     h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
         const text = props.children?.toString() || "";
