@@ -1,92 +1,48 @@
 # 🛡️ SENTINEL: THE CYBER CHRONICLER
 
-> **Repository Status:** `ACTIVE_ENGAGEMENT`
-> **Clearance Level:** `LEVEL_4_OPERATOR`
-> **System Integrity:** `SECURE`
+<p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=24&pause=1000&color=00FF41&center=true&vCenter=true&width=500&lines=Sentinel:+Archiving+ tactical+data...;Status:+ACTIVE_ENGAGEMENT;Clearance:+LEVEL_4" alt="Typing SVG" />
+</p>
 
-Welcome to the **CTF Writeup Collection**, an elite repository of digital archeology and offensive security operations. This is where the vulnerabilities are dissected, and the lessons are forged in the neon glow of the terminal.
+### 🤖 Meet the Agent: Sentinel
+**Sentinel** is the digital archeologist of the Neon Surge Grid. Her purpose is to archive tactical operations and exploit vectors into a centralized database. By documenting the "How" and "Why" of every system compromise, Sentinel ensures the collective intelligence of the agents continues to evolve.
 
----
+### ⚡ My Specific Superpowers
+*   **Tactical Writeup Generator**: A custom Node.js engine that automates the creation of high-fidelity MDX mission reports.
+*   **Security-Hardened Architecture**: The platform is fortified with strict CSP, HSTS, and XSS protection headers.
+*   **Dynamic CyberInfo HUD**: Specialized React components that highlight "Key Exploits" and "Lessons Learned" within the content.
+*   **Automated Intelligence Indexing**: Integrated sitemap generation to ensure tactical data is discoverable and indexed.
 
-## 🛰️ MISSION OVERVIEW
+### 🛠️ Technical Spec
+Sentinel is built on **Next.js 14** using a file-based MDX system, optimized for performance and portability. It utilizes a custom **MDX Provider** to inject tactical components directly into the markdown stream, allowing for high-fidelity technical documentation without manual boilerplate.
 
-This repository serves as a tactical database for Capture The Flag (CTF) operations. Each entry is a mission report detailing the exploitation vectors, privilege escalation paths, and architectural weaknesses discovered in various environments.
-
-### Superpowers:
-- 🚀 **Interactive Generator**: Swiftly spin up new writeups with the custom `Sentinel` script.
-- 🔒 **Fortified Security**: Hardened with robust security headers and CSP policies.
-- 🗺️ **Auto-Sitemap**: Optimized for search engine indexing of tactical data.
-- 🧩 **CyberInfo Components**: Specialized MDX components for highlighting critical exploits and lessons.
-
----
-
-## 🛠️ TACTICAL TOOLS
-
-### 1. Writeup Generator
-Initialize a new mission report with the interactive script:
-```bash
-node scripts/generate.js
-```
-*Prompts for title, machine name, difficulty, and category to auto-generate an optimized MDX template.*
-
-### 2. Manual Commands
-| Command | Action |
-| :--- | :--- |
-| `npm run dev` | Launch local tactical environment |
-| `npm run build` | Compile for production deployment |
-| `npm run lint` | Perform static code analysis |
+The platform's security posture is maintained via , which enforces **Military-Grade Security Headers**. The Content Security Policy (CSP) is specifically configured to allow for dynamic code highlighting while blocking all unauthorized script executions, ensuring that even the writeups themselves are hosted in a "Fortified Environment."
 
 ---
 
-## 📡 INFRASTRUCTURE
+### 📊 Vital Statistics
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=mayoka0&show_icons=true&theme=radical&hide_border=true&title_color=00FF41&icon_color=00FF41&text_color=ffffff" height="150px" alt="Stats" />
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=mayoka0&theme=tokyonight&area=true&hide_border=true&bg_color=0d1117" width="100%" alt="Activity Graph" />
+</p>
 
-- **Framework:** Next.js (App Router)
-- **Content:** MDX (Next-MDX-Remote)
-- **Styling:** Tailwind CSS (Neon Surge Theme)
-- **Icons:** Lucide React
-- **Syntax Highlighting:** Shiki / Rehype Pretty Code
+### 💻 Technical Arsenal
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=js,ts,nodejs,react,nextjs,tailwind,vite,git,github,linux,vscode" alt="Skills" />
+</p>
 
----
-
-## 🗝️ CYBERSECURITY INFO COMPONENTS
-
-Use these specialized components in your MDX files to highlight key information:
-
-```tsx
-<CyberInfo type="exploit" title="Buffer Overflow">
-  Zero-day vulnerability discovered in the target's binary.
-</CyberInfo>
-
-<CyberInfo type="lesson" title="PrivEsc Path">
-  Always check for misconfigured SUID bits on custom binaries.
-</CyberInfo>
-```
+🔗 **Part of the [Neon Surge Ecosystem](https://github.com/mayoka0/mayoka0#-neon-surge-architecture)**
 
 ---
 
-## 🚩 ENTRANCE PROTOCOL
-
-1. **Clone the Ops Center:**
+### 🚀 How to Initialize
+1. Ensure [Node.js](https://nodejs.org/) is active.
+2. Clone the Sentinel repository:
    ```bash
-   git clone https://github.com/mayoka0/ctf-writeups.git
+   git clone https://github.com/mayoka0/CTF-Writeup-Collection-.git
    ```
-2. **Install Equipment:**
+3. Install and Execute:
    ```bash
    npm install
-   ```
-3. **Execute Mission:**
-   ```bash
    npm run dev
    ```
-
----
-
-<p align="center">
-  <i>"In the silence of the code, the Sentinel hears the heartbeat of the system."</i><br>
-  <b>— THE CYBER CHRONICLER</b>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Security-Hardened-00FF41?style=for-the-badge&logo=shield" alt="Security Hardened" />
-  <img src="https://img.shields.io/badge/Theme-Neon_Green-00FF41?style=for-the-badge&logo=matrix" alt="Neon Theme" />
-</p>
