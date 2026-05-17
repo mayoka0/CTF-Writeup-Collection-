@@ -1,19 +1,23 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { z } from 'zod';
 
 const writeupsDirectory = path.join(process.cwd(), 'content', 'writeups');
 
-export interface WriteupMetadata {
-  title: string;
-  date: string;
-  category: string;
-  tags: string[];
-  event: string;
-  difficulty: 'Easy' | 'Medium' | 'Hard';
+const WriteupMetadataSchema = z.object({
+  title: z.string(),
+  date: z.string(),
+  category: z.string(),
+  tags: z.array(z.string()),
+  event: z.string().optional(),
+  difficulty: z.enum(['Easy', 'Medium', 'Hard']),
+});
+
+export type WriteupMetadata = z.infer<typeof WriteupMetadataSchema> & {
   slug: string;
   readingTime: number;
-}
+};
 
 export function getWriteupSlugs() {
   if (!fs.existsSync(writeupsDirectory)) {
@@ -29,6 +33,9 @@ export function getWriteupBySlug(slug: string) {
 
   const { data, content } = matter(fileContents);
   
+  // Validate frontmatter
+  const validatedData = WriteupMetadataSchema.parse(data);
+  
   // Calculate reading time roughly (words / 200 words per min)
   const words = content.split(/\s+/).length;
   const readingTime = Math.ceil(words / 200);
@@ -36,7 +43,7 @@ export function getWriteupBySlug(slug: string) {
   return {
     slug: realSlug,
     metadata: {
-      ...(data as Omit<WriteupMetadata, 'slug' | 'readingTime'>),
+      ...validatedData,
       slug: realSlug,
       readingTime,
     },
